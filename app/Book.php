@@ -12,4 +12,12 @@ class Book extends Model
         // return "/books/".$this->id."-".$this->title;
         return "/books/".$this->id;
     }
+
+    public function setAuthorIdAttribute($author){
+        // firstOrCreate() - a laravel helper function that checks all objects to:
+        // send the first equal object, orelse create and return a new object.
+        $this->attributes["authorId"] = (Author::firstOrCreate([
+            "name" => $author,
+        ]))->id;
+    }
 }
