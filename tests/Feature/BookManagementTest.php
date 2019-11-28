@@ -43,10 +43,12 @@ class BookManagementTest extends TestCase
 
         $response = $this->post(
             "/books",
-            array_merge( $this->data(), ["authorId"=>""] ) 
+            array_merge( $this->data(), ["author_id"=>""] ) 
         );
 
-        $response->assertSessionHasErrors("authorId");
+        // dd($response);
+
+        $response->assertSessionHasErrors("author_id");
     }
 
     /** @test */
@@ -58,16 +60,16 @@ class BookManagementTest extends TestCase
         $this->post("/books",$this->data());
 
         $tempBook = Book::first();
-        // dd($tempBook->authorId);
+        // dd($tempBook->author_id);
         $response=$this->patch($tempBook->path(),[
             "title" => "Update Title",
-            "authorId" => "Updated AuthorID",
+            "author_id" => "Updated Author_iD",
         ]);
         
         $updatedBook = Book::first();
-        // dd($updatedBook->authorId);
+        // dd($updatedBook->author_id);
         $this->assertEquals("Update Title", $updatedBook ->title);
-        $this->assertEquals("2", $updatedBook ->authorId);
+        $this->assertEquals("2", $updatedBook ->author_id);
         $response->assertRedirect($updatedBook ->path());
     }
 
@@ -93,17 +95,17 @@ class BookManagementTest extends TestCase
 
         $this->post("/books",[
             "title" =>  "New Title",
-            "authorId" => "New Author",
+            "author_id" => "New Author",
         ]);
 
-        $this->assertEquals(Book::first()->authorId, Author::first()->id);
+        $this->assertEquals(Book::first()->author_id, Author::first()->id);
         $this->assertCount(1, Author::all());
     }
 
     private function data(){
         return[
             "title"  => "New Title",
-            "authorId" => "New AuthorID",
+            "author_id" => "New AuthorID",
         ];
     }
 }

@@ -15,7 +15,7 @@ class BookTest extends TestCase
     public function an_author_id_is_recorded(){
         Book::create([
             "title" => "New Title",
-            "authorId" => 1,
+            "author_id" => 1,
         ]);
 
         $this->assertCount(1, Book::all());
